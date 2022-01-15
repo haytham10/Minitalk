@@ -12,22 +12,9 @@
 
 #include "minitalk.h"
 
-int	ft_isdigit(int c)
+void	ft_putchar(int c)
 {
-	if (c <= '9' && c >= '0')
-		return (1);
-	return (0);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char	*s2;
-
-	s2 = malloc(ft_strlen(s1) + 1);
-	if (s2 == NULL)
-		return (NULL);
-	ft_memcpy(s2, s1, ft_strlen(s1) + 1);
-	return (s2);
+	write(1, &c, 1);
 }
 
 static int	is_space(char c)
@@ -60,4 +47,13 @@ int	ft_atoi(const char	*str)
 		i++;
 	}
 	return (s * res);
+}
+
+void	ft_putstr(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+		ft_putchar(str[i++]);
 }

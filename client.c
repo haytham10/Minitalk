@@ -22,11 +22,11 @@ void	error(char *str)
 
 int	s_null(int s_pid, char *msg)
 {
-	static int i = 0;
+	static int	i = 0;
 
 	if (i++ != 8)
 	{
-		if (kill(pid, SIGUSR1) == -1)
+		if (kill(s_pid, SIGUSR1) == -1)
 			error(msg);
 		return (0);
 	}
@@ -40,7 +40,7 @@ int	s_bit(int pid, char *str)
 	static int	bits = -1;
 
 	if (str)
-		msg = ft_strdup(str);
+		msg = strdup(str);
 	if (!msg)
 		error(0);
 	if (pid)
@@ -82,13 +82,12 @@ void	handler(int signum)
 }
 
 int	main(int ac, char **av)
-{
-	if (ac != 3 || !ft_isdigit(av[1]))
+{	
+	if (ac != 3)
 		printf("INVALID ARGUMENTS.\n");
 	signal(SIGUSR1, handler);
 	signal(SIGUSR2, handler);
-	s_bit(ft_atoi(av[1]), av[2]);
+	s_bit(atoi(av[1]), av[2]);
 	while (1)
 		pause();
-
 }

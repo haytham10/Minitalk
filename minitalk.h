@@ -13,10 +13,26 @@
 #ifndef	MINITALK_H
 #define MINITALK_H
 
+typedef struct	s_data{
+		int		i;
+		char	c;
+		int		c_pid;
+}	t_data;
+
 #include <signal.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <unistd.h>
 
 int		ft_isdigit(int c);
 int		ft_atoi(const char	*str);
 char	*ft_strdup(const char *s1);
-
+void	ft_putstr(char *str);
+void	ft_putchar(int c);
+void	c_msg(char *msg, int pid);
+void	s_bit(char	str, int pid);
+void	handler(int signum, siginfo_t *info, void *context);
+void	rst(void);
 #endif

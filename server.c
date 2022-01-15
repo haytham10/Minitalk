@@ -12,44 +12,46 @@
 
 #include "minitalk.h"
 
+t_data m_data;
+
+void	rst(void)
+{
+	m_data.i = 0;
+	m_data.c = 0;
+	m_data.c_pid = 0;
+}
+
 void	handler(int signum, siginfo_t *info, void *context)
 {
-	static char	c = 0xFF;
-	static int	bits = 0;
-	static int	pid = 0;
-	static char	*msg = 0;
-
 	(void)context;
-	if (info->si_pid)
-		pid = info->si_pid;
-	if (signum == SIGUSR1)
-		c ^= 0x80 >> bits;
-	else if (signum == SIGUSR2)
-		c |= 0x80 >> bits;
-	if (++bits == 8)
+	if (m_data.c_pid != info->si_pid)
+		rst();
+	m_data.c = m_data.c << 1 | signum;
+	m_data.i++;
+	if(m_data.i == 8)
 	{
-		if (c)
-			msg = 
+		write(1, &m_data.c, 1);
+		rst();
 	}
+	m_data.c_pid = info->si_pid;
 }
 
 int	main(void)
 {
 	struct sigaction	sa_signal;
 	sigset_t			b_mask;
-	int					i;
 
+	rst();
+	printf("PID: %d\n", getpid());
 	sigemptyset(&b_mask);
 	sigaddset(&b_mask, SIGINT);
 	sigaddset(&b_mask, SIGQUIT);
 	sa_signal.sa_handler = 0;
 	sa_signal.sa_flags = SA_SIGINFO;
 	sa_signal.sa_mask = b_mask;
-	sa_signal.sa_sigaction = handler;
+	sa_signal.sa_sigaction = &handler;
 	sigaction(SIGUSR1, &sa_signal, NULL);
 	sigaction(SIGUSR2, &sa_signal, NULL);
-	i = getpid();
-	printf("PID: %d\n", i);
-	whlie (1)
-		pause();
+	while (1)
+		sleep(1);
 }
