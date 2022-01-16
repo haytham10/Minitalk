@@ -23,8 +23,6 @@ void	rst(void)
 
 void	handler(int signum, siginfo_t *info, void *context)
 {
-	char c = '0'+signum - SIGUSR1;
-	write(1,&c,1);
 	(void)context;
 	signum -= SIGUSR1;
 	if (m_data.c_pid != info->si_pid)
