@@ -6,7 +6,7 @@
 #    By: hmokhtar <hmokhtar@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/15 09:33:19 by hmokhtar          #+#    #+#              #
-#    Updated: 2022/01/15 10:07:47 by hmokhtar         ###   ########.fr        #
+#    Updated: 2022/01/15 12:27:54 by hmokhtar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ all : $(CLIENT) $(SERVER)
 	@$(CC) $(FLAGS) -c $<
 
 $(CLIENT):$(OBJS)
-	@$(CC) $(FLAGS) client_new.c $(OBJS) -o $(CLIENT)
+	@$(CC) $(FLAGS) client.c $(OBJS) -o $(CLIENT)
 	@echo $(GREEN)"DONE MAKING CLIENT"
 
 $(SERVER):$(OBJS)

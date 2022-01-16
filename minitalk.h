@@ -26,9 +26,7 @@ typedef struct	s_data{
 #include <ctype.h>
 #include <unistd.h>
 
-int		ft_isdigit(int c);
 int		ft_atoi(const char	*str);
-char	*ft_strdup(const char *s1);
 void	ft_putstr(char *str);
 void	ft_putchar(int c);
 void	c_msg(char *msg, int pid);

@@ -23,12 +23,15 @@ void	rst(void)
 
 void	handler(int signum, siginfo_t *info, void *context)
 {
+	char c = '0'+signum - SIGUSR1;
+	write(1,&c,1);
 	(void)context;
+	signum -= SIGUSR1;
 	if (m_data.c_pid != info->si_pid)
 		rst();
 	m_data.c = m_data.c << 1 | signum;
 	m_data.i++;
-	if(m_data.i == 8)
+	if (m_data.i == 8)
 	{
 		write(1, &m_data.c, 1);
 		rst();
@@ -44,12 +47,12 @@ int	main(void)
 	rst();
 	printf("PID: %d\n", getpid());
 	sigemptyset(&b_mask);
-	sigaddset(&b_mask, SIGINT);
-	sigaddset(&b_mask, SIGQUIT);
-	sa_signal.sa_handler = 0;
+	sigaddset(&b_mask, SIGUSR1);
+	sigaddset(&b_mask, SIGUSR2);
+	// sa_signal.sa_handler = 0;
 	sa_signal.sa_flags = SA_SIGINFO;
 	sa_signal.sa_mask = b_mask;
-	sa_signal.sa_sigaction = &handler;
+	sa_signal.sa_sigaction = handler;
 	sigaction(SIGUSR1, &sa_signal, NULL);
 	sigaction(SIGUSR2, &sa_signal, NULL);
 	while (1)

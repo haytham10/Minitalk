@@ -5,89 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmokhtar <hmokhtar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/11 17:36:28 by hmokhtar          #+#    #+#             */
-/*   Updated: 2022/01/11 17:36:28 by hmokhtar         ###   ########.fr       */
+/*   Created: 2022/01/14 22:16:53 by hmokhtar          #+#    #+#             */
+/*   Updated: 2022/01/15 16:24:49 by hmokhtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	error(char *str)
+void	s_bit(char str, int pid)
 {
-	if (str)
-		free(str);
-	printf("CLIENT: UNEXPECTED ERROR.\n");
-	exit(EXIT_FAILURE);
-}
+	int	i;
 
-int	s_null(int s_pid, char *msg)
-{
-	static int	i = 0;
-
-	if (i++ != 8)
+	i = 7;
+	while (i >= 0)
 	{
-		if (kill(s_pid, SIGUSR1) == -1)
-			error(msg);
-		return (0);
+		if (str >> i & 1)
+			kill(pid, SIGUSR2);
+		else
+			kill(pid, SIGUSR1);
+		usleep(800);
+		i--;
 	}
-	return (1);
 }
 
-int	s_bit(int pid, char *str)
-{
-	static char	*msg = 0;
-	static int	s_pid = 0;
-	static int	bits = -1;
-
-	if (str)
-		msg = strdup(str);
-	if (!msg)
-		error(0);
-	if (pid)
-		s_pid = pid;
-	if (msg[++bits / 8])
-	{
-		if (msg[bits / 8] & (0x80 >> (bits % 8)))
-		{
-			if (kill(s_pid, SIGUSR2) == -1)
-				error (msg);
-		}
-		else if (kill(s_pid, SIGUSR1) == -1)
-			error(msg);
-		return (0);
-	}
-	if (!s_null(s_pid, msg))
-		return (0);
-	free(msg);
-	return (1);
-}
-
-void	handler(int signum)
+void	c_msg(char *msg, int pid)
 {
 	int	i;
 
 	i = 0;
-	if (signum == SIGUSR1)
-		i = s_bit(0, 0);
-	else if (signum == SIGUSR2)
-	{
-		printf("CLIENT: SERVER ENDED UNEXPECTEDLY!.\n");
-		exit(EXIT_FAILURE);
-	}
-	if (i)
-	{
-		printf("OPERATION SUCCESSFUL.\n");
-		exit(EXIT_SUCCESS);
-	}
+	while (msg[i])
+		s_bit(msg[i++], pid);
 }
 
 int	main(int ac, char **av)
-{	
+{
+	int		s_pid;
+	char	*msg;
+
 	if (ac != 3)
-		printf("INVALID ARGUMENTS.\n");
-	signal(SIGUSR1, handler);
-	signal(SIGUSR2, handler);
-	s_bit(atoi(av[1]), av[2]);
-	while (1)
-		pause();
+		ft_putstr("INVALID ARGUMENTS\n");
+	s_pid = ft_atoi(av[1]);
+	msg = av[2];
+	c_msg(msg, s_pid);
+	return (0);
 }
