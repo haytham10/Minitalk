@@ -12,38 +12,42 @@
 
 #include "minitalk.h"
 
-t_data m_data;
+t_data	g_data;
 
 void	rst(void)
 {
-	m_data.i = 0;
-	m_data.c = 0;
-	m_data.c_pid = 0;
+	g_data.i = 0;
+	g_data.c = 0;
+	g_data.c_pid = 0;
 }
 
 void	handler(int signum, siginfo_t *info, void *context)
 {
 	(void)context;
 	signum -= SIGUSR1;
-	if (m_data.c_pid != info->si_pid)
+	if (g_data.c_pid != info->si_pid)
 		rst();
-	m_data.c = m_data.c << 1 | signum;
-	m_data.i++;
-	if (m_data.i == 8)
+	g_data.c = g_data.c << 1 | signum;
+	g_data.i++;
+	if (g_data.i == 8)
 	{
-		write(1, &m_data.c, 1);
+		write(1, &g_data.c, 1);
 		rst();
 	}
-	m_data.c_pid = info->si_pid;
+	g_data.c_pid = info->si_pid;
 }
 
 int	main(void)
 {
 	struct sigaction	sa_signal;
 	sigset_t			b_mask;
+	int					pid;
 
 	rst();
-	printf("PID: %d\n", getpid());
+	pid = getpid();
+	ft_putstr("PID: ");
+	ft_putnbr(pid);
+	ft_putchar('\n');
 	sigemptyset(&b_mask);
 	sigaddset(&b_mask, SIGUSR1);
 	sigaddset(&b_mask, SIGUSR2);

@@ -28,6 +28,7 @@ typedef struct	s_data{
 
 int		ft_atoi(const char	*str);
 void	ft_putstr(char *str);
+void	ft_putnbr(int nb);
 void	ft_putchar(int c);
 void	c_msg(char *msg, int pid);
 void	s_bit(char	str, int pid);
