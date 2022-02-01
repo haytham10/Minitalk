@@ -6,7 +6,7 @@
 /*   By: hmokhtar <hmokhtar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 22:16:53 by hmokhtar          #+#    #+#             */
-/*   Updated: 2022/01/21 01:27:17 by hmokhtar         ###   ########.fr       */
+/*   Updated: 2022/02/01 11:43:52 by hmokhtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	s_bit(char str, int pid)
 			kill(pid, SIGUSR2);
 		else
 			kill(pid, SIGUSR1);
-		usleep(800);
+		usleep(400);
 		i--;
 	}
 }
