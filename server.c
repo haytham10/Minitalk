@@ -47,7 +47,7 @@ int	main(void)
 	sigemptyset(&b_mask);
 	sigaddset(&b_mask, SIGUSR1);
 	sigaddset(&b_mask, SIGUSR2);
-	// sa_signal.sa_handler = 0;
+	sa_signal.sa_handler = 0;
 	sa_signal.sa_flags = SA_SIGINFO;
 	sa_signal.sa_mask = b_mask;
 	sa_signal.sa_sigaction = handler;

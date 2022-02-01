@@ -6,7 +6,7 @@
 /*   By: hmokhtar <hmokhtar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 22:16:53 by hmokhtar          #+#    #+#             */
-/*   Updated: 2022/01/15 16:24:49 by hmokhtar         ###   ########.fr       */
+/*   Updated: 2022/01/21 01:27:17 by hmokhtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,20 @@ void	c_msg(char *msg, int pid)
 
 int	main(int ac, char **av)
 {
-	int		s_pid;
+	int		pid;
 	char	*msg;
 
-	if (ac != 3)
+	if (ac == 3)
+	{
+		pid = ft_atoi(av[1]);
+		if (pid <= 0)
+			ft_putstr("INVALID PID\n");
+		msg = av[2];
+		if (!msg)
+			ft_putstr("INVALID MESSAGE\n");
+		c_msg(msg, pid);
+	}
+	else
 		ft_putstr("INVALID ARGUMENTS\n");
-	s_pid = ft_atoi(av[1]);
-	msg = av[2];
-	c_msg(msg, s_pid);
 	return (0);
 }
