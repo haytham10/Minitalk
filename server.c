@@ -41,12 +41,10 @@ int	main(void)
 {
 	struct sigaction	sa_signal;
 	sigset_t			b_mask;
-	int					pid;
 
 	rst();
-	pid = getpid();
 	ft_putstr("PID: ");
-	ft_putnbr(pid);
+	ft_putnbr(getpid());
 	ft_putchar('\n');
 	sigemptyset(&b_mask);
 	sigaddset(&b_mask, SIGUSR1);
@@ -59,4 +57,5 @@ int	main(void)
 	sigaction(SIGUSR2, &sa_signal, NULL);
 	while (1)
 		sleep(1);
+	return (0);
 }
