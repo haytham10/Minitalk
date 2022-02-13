@@ -6,7 +6,7 @@
 /*   By: hmokhtar <hmokhtar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 22:16:53 by hmokhtar          #+#    #+#             */
-/*   Updated: 2022/02/07 19:04:56 by hmokhtar         ###   ########.fr       */
+/*   Updated: 2022/02/13 17:03:39 by hmokhtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,20 @@ int	main(int ac, char **av)
 		if (pid <= 0)
 		{
 			ft_putstr("INVALID PID\n");
-			exit(0);
+			exit(EXIT_FAILURE);
 		}
 		msg = av[2];
 		if (!msg)
 		{
 			ft_putstr("INVALID MESSAGE\n");
-			exit(0);
+			exit(EXIT_FAILURE);
 		}
 		c_msg(msg, pid);
 	}
 	else
 	{
 		ft_putstr("INVALID ARGUMENTS\n");
-		exit(0);
+		exit(EXIT_FAILURE);
 	}
 	return (0);
 }
