@@ -25,6 +25,6 @@ typedef struct s_data{
 int		ft_atoi(const char	*str);
 void	ft_putstr(char *str);
 void	ft_putnbr(int nb);
-void	ft_putchar(int c);
+void	ft_putchar(char c);
 
 #endif
