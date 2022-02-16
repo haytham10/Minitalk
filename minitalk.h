@@ -20,6 +20,7 @@
 typedef struct s_data{
 	int		i;
 	char	c;
+	int		c_pid;
 }	t_data;
 
 int		ft_atoi(const char	*str);

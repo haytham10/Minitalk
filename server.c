@@ -18,12 +18,15 @@ void	rst(void)
 {
 	g_data.i = 0;
 	g_data.c = 0;
+	g_data.c_pid = 0;
 }
 
 void	handler(int signum, siginfo_t *info, void *context)
 {
-	(void)info;
+	
 	(void)context;
+	if (g_data.c_pid != info->si_pid)
+		rst();
 	signum -= SIGUSR1;
 	g_data.c = g_data.c << 1 | signum;
 	g_data.i++;
@@ -32,6 +35,7 @@ void	handler(int signum, siginfo_t *info, void *context)
 		ft_putchar(g_data.c);
 		rst();
 	}
+	g_data.c_pid = info->si_pid;
 }
 
 int	main(void)
